@@ -40,6 +40,7 @@ describe("ASTGenerator", () => {
     given                                                  | expected
     ${["(", "list", "a", "b", "c", ")"]}                   | ${[["list", "a", "b", "c"]]}
     ${["(", "cons", "a", "(", "cons", "b", "c", ")", ")"]} | ${[["cons", "a", ["cons", "b", "c"]]]}
+    ${["(", "cons", "a", "b", ")", "(", "cons", "a", "b", ")"]} | ${[["cons", "a", "b"], ["cons", "a", "b"]]}
   `("generateAST($given) ~= $expected", ({ given, expected }) => {
     expect(generateAST(given)).toEqual(expected);
   })
