@@ -1,4 +1,4 @@
-import { interpret } from "./Interpreter"
+import { interpret, numLisp } from "./Interpreter"
 
 describe("Interpreter", () => {
   test.each`

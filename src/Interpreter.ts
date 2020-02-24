@@ -8,3 +8,11 @@ export function interpret(program: string): any[] {
   const results = asts.map(ast => execute(ast));
   return results;
 }
+
+export const numLisp = (code: TemplateStringsArray, ...vars: any[]) => {
+  if (vars.length) {
+    throw new Error("Only use literals, please.");
+  }
+
+  return interpret(code[0]);
+}
