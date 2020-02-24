@@ -36,7 +36,7 @@ export const withoutEnclosingBrackets = (tokens: string[]): string[] => {
   return tokens;
 }
 
-type AST = (string | AST)[];
+export type AST = (string | AST)[];
 
 export const generateAST = (tokens: string[]): AST => {
   const result: AST = [];
@@ -58,8 +58,30 @@ export const generateAST = (tokens: string[]): AST => {
 
         break;
       default:
-        result.push(token);
+        result.push(token as any);
         break;
+    }
+  }
+
+  return result;
+}
+
+export const generateASTs = (tokens: string[]): AST[] => {
+  const result: AST[] = [];
+
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+
+    if (token === "(") {
+      const remainder = tokens.slice(i);
+      const lengthOfSubExpression = indexOfClosingBracket(remainder);
+      const endOfSubExpression = i + lengthOfSubExpression;
+      
+      const subExpressionWithEnclosingBrackets = tokens.slice(i, endOfSubExpression + 1);
+      const subExpression = withoutEnclosingBrackets(subExpressionWithEnclosingBrackets);
+
+      i = endOfSubExpression;
+      result.push(generateAST(subExpression));
     }
   }
 

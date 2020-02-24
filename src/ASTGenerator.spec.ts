@@ -1,4 +1,4 @@
-import { generateAST, untilClosingBracket, withoutEnclosingBrackets } from "./ASTGenerator"
+import { generateASTs, untilClosingBracket, withoutEnclosingBrackets } from "./ASTGenerator"
 
 describe("ASTGenerator", () => {
 
@@ -37,11 +37,11 @@ describe("ASTGenerator", () => {
   })
 
   test.each`
-    given                                                  | expected
-    ${["(", "list", "a", "b", "c", ")"]}                   | ${[["list", "a", "b", "c"]]}
-    ${["(", "cons", "a", "(", "cons", "b", "c", ")", ")"]} | ${[["cons", "a", ["cons", "b", "c"]]]}
+    given                                                       | expected
+    ${["(", "list", "a", "b", "c", ")"]}                        | ${[["list", "a", "b", "c"]]}
+    ${["(", "cons", "a", "(", "cons", "b", "c", ")", ")"]}      | ${[["cons", "a", ["cons", "b", "c"]]]}
     ${["(", "cons", "a", "b", ")", "(", "cons", "a", "b", ")"]} | ${[["cons", "a", "b"], ["cons", "a", "b"]]}
   `("generateAST($given) ~= $expected", ({ given, expected }) => {
-    expect(generateAST(given)).toEqual(expected);
+    expect(generateASTs(given)).toEqual(expected);
   })
 })
