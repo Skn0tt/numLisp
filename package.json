@@ -1,5 +1,11 @@
 {
   "name": "numlisp",
+  "author": {
+    "name": "Simon Knott",
+    "email": "info@simonknott.de",
+    "url": "https://simonknott.de"
+  },
+  "repository": "https://github.com/skn0tt/numlisp",
   "version": "1.0.0",
   "license": "MIT",
   "bin": "bin/cli.js",
