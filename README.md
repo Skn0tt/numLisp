@@ -8,7 +8,13 @@ Usage:
 ```ts
 import { numLisp } from "./src/Interpreter";
 
-numLisp`( + 10 ( car ( list 32 33 34 ) ) )` // 42
+numLisp`
+  (+ 10
+    (car
+      (list 32 33 34)
+    )
+  )
+` // 42
 ```
 
 ## Motivation
