@@ -6,7 +6,7 @@
     "url": "https://simonknott.de"
   },
   "repository": "https://github.com/skn0tt/numlisp",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "bin": "bin/cli.js",
   "scripts": {
