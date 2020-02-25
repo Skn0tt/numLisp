@@ -1,12 +1,15 @@
-import * as _ from "lodash";
+#! /usr/bin/env node
+
+import program from "commander";
 import { interpret } from "./Interpreter";
+const { version } = require("../package.json");
 
-const code = _.last(process.argv);
+program
+  .version(version)
+  .arguments("<code>")
+  .action(code => {
+    const result = interpret(code);
+    console.log(result.join("\n"));
+  });
 
-if (!code) {
-  process.exit(1);
-}
-
-const result = interpret(code);
-
-console.log(result.join("\n"));
+program.parse(process.argv);
