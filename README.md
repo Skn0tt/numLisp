@@ -1,20 +1,17 @@
 # numLisp
 
+![npm](https://img.shields.io/npm/v/numlisp?style=flat-square)
+
 A naïve Lisp interpreter.
 It only supports Lists and Numbers and doesn't support custom definitions.
 
 Usage:
 
-```ts
-import { numLisp } from "./src/Interpreter";
+```sh
+> yarn global add numlisp
 
-numLisp`
-  (+ 10
-    (car
-      (list 32 33 34)
-    )
-  )
-` // 42
+> numlisp '(+ 10 (car (list 32 33 34)))'
+42
 ```
 
 ## Motivation
