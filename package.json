@@ -14,6 +14,9 @@
     "test": "jest",
     "pre-commit": "yarn test"
   },
+  "files": [
+    "dist/"
+  ],
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
