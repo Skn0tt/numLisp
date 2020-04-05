@@ -101,15 +101,20 @@ export default FullScreenCode;
 }</SyntaxHighlighter>
 
 ---
+export default FullScreenCode;
 
 # Parsing
 
-[![](https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggVERcblxuXHQrIC0tPiAxMFxuICAgICsgLS0-IGNhclxuICAgIGNhciAtLT4gbGlzdFxuICAgIGxpc3QgLS0-IDMyXG4gICAgbGlzdCAtLT4gMzNcbiAgICBsaXN0IC0tPiAzNFxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggVERcblxuXHQrIC0tPiAxMFxuICAgICsgLS0-IGNhclxuICAgIGNhciAtLT4gbGlzdFxuICAgIGxpc3QgLS0-IDMyXG4gICAgbGlzdCAtLT4gMzNcbiAgICBsaXN0IC0tPiAzNFxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)
+<img
+  src="https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RcbiAgICBsaXN0IC0tPiAzMlxuICAgIGxpc3QgLS0-IDMzXG4gICAgbGlzdCAtLT4gMzRcblx0XHRcdFx0XHQiLCJtZXJtYWlkIjp7InRoZW1lIjoibmV1dHJhbCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ"
+  alt="Abstract Syntax Tree"
+  style={{ height: "50vh", width: "100%", objectFit: "contain" }}
+/>
 
 ---
 export default FullScreenCode;
 
-# Executing
+# Interpreting
 
 <SyntaxHighlighter language="text">{
 `[ "+",
@@ -124,9 +129,159 @@ export default FullScreenCode;
 }</SyntaxHighlighter>
 
 ---
-
 export default Code
 
-```javascript A playground slide!
-console.log("Hello World!");
+```js
+const _ = require("lodash");
+
+const splitMultiple = (...splitters) => v => {
+  const result = [];
+
+  let lastElement = "";
+
+  _.forEach(v, c => {
+    if (_.includes(splitters, c)) {
+      if (lastElement) {
+        result.push(lastElement);
+      }
+      result.push(c);
+      lastElement = "";
+    } else {
+      lastElement += c;
+    }
+  })
+
+  if (lastElement) {
+    result.push(lastElement);
+  }
+
+  return result;
+}
+```
+```javascript Building a Lexer
+function tokenize(v) {
+  const tokens = splitMultiple("(", ")", " ")(v);
+  return tokens;
+  // return tokens.filter(v => v.trim().length > 0);
+}
+
+tokenize("(+ 10 (car (list 32 33 34)))");
+```
+
+---
+export default Code
+
+```js
+const _ = require("lodash");
+const indexOfClosingBracket = (tokens) => {
+    let openedBrackets = 0;
+    for (let i = 0; i < tokens.length; i++) {
+        const isFirstToken = i === 0;
+        const token = tokens[i];
+        switch (token) {
+            case "(":
+                openedBrackets++;
+                break;
+            case ")":
+                openedBrackets--;
+                if (!isFirstToken && openedBrackets === 0) {
+                    return i;
+                }
+                break;
+        }
+    }
+    return -1;
+};
+const untilClosingBracket = (tokens) => {
+    const closingIndex = indexOfClosingBracket(tokens);
+    return tokens.slice(0, closingIndex + 1);
+};
+const withoutEnclosingBrackets = (tokens) => {
+    if (_.first(tokens) === "(" && _.last(tokens) === ")") {
+        return _.tail(_.initial(tokens));
+    }
+    return tokens;
+};
+const generateAST = (tokens) => {
+    const result = [];
+    for (let i = 0; i < tokens.length; i++) {
+        const token = tokens[i];
+        switch (token) {
+          case "(":
+            const remainder = tokens.slice(i);
+            const lengthOfSubExpression = indexOfClosingBracket(remainder);
+            const endOfSubExpression = i + lengthOfSubExpression;
+            const subExpressionWithEnclosingBrackets = tokens.slice(i, endOfSubExpression + 1);
+            const subExpression = withoutEnclosingBrackets(subExpressionWithEnclosingBrackets);
+            i = endOfSubExpression;
+            result.push(generateAST(subExpression));
+            break;
+        default:
+            result.push(token);
+            break;
+        }
+    }
+    return result;
+};
+```
+```javascript Building a Parser
+function generateASTs(tokens) {
+  const result = [];
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+    if (token === "(") {
+      const remainder = tokens.slice(i);
+      const lengthOfSubExpression = indexOfClosingBracket(remainder);
+      const endOfSubExpression = i + lengthOfSubExpression;
+      const subExpressionWithEnclosingBrackets = tokens.slice(i, endOfSubExpression + 1);
+      const subExpression = withoutEnclosingBrackets(subExpressionWithEnclosingBrackets);
+      i = endOfSubExpression;
+      result.push(generateAST(subExpression));
+    }
+  }
+  return result;
+}
+
+generateASTs(["(", "+", "10", "(", "car", "(", "list", "32", "33", "34", ")", ")", ")"]);
+```
+
+---
+export default Code
+
+```js
+const _ = require("lodash");
+
+const globals = {
+  "+": (a, b) => plus(+a, +b),
+  car,
+  list
+};
+
+function list(...args) {
+  return args;
+}
+function car(args) {
+  return args[0];
+}
+```
+```javascript Building an Interpreter
+function interpret(ast) {
+  const [ funcRef, ...args ] = ast;
+  const argsToPass = args.map(arg => { // resolve embedded ASTs
+    if (_.isArray(arg)) {
+      return interpret(arg);
+    }
+
+    return arg;
+  }); 
+
+  const func = globals[funcRef]; // get Implementation of function
+  return func(...argsToPass); // execute
+}
+
+function plus(a, b) {
+  // TODO:
+}
+
+interpret(["+", "10", ["car", ["list", "32", "33", "34"]]]);
 ```
