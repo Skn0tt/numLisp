@@ -4,8 +4,7 @@
     "build": "mdx-deck build slides.mdx --out-dir public"
   },
   "dependencies": {
-    "mdx-code": "^1.1.3",
-    "react-syntax-highlighter": "^12.2.1"
+    "mdx-code": "^1.1.3"
   },
   "devDependencies": {
     "mdx-deck": "1.10.2"
