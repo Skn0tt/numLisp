@@ -41,7 +41,7 @@ function getCharArray(program) {
   return program.split("");
 }
 ```
-```javascript Building a Brainfuck-esque interpreter
+```javascript Building a Brainfuck-esque interpreter: "-+++-."
 function interpret(program) {
   const tokens = getCharArray(program);
 
@@ -65,6 +65,21 @@ function interpret(program) {
 interpret("-+++-.");
 // interpret("++++.+-+-++[+-+------.");
 ```
+
+---
+export default FullScreenCode;
+
+# LISP explained
+
+<SyntaxHighlighter language="lisp">{
+`(+ 7 8) // 15
+(list 1 2 3) // [1, 2, 3]
+(cons 42 (list 1 2 3)) // [42, 1, 2, 3]
+(car (list 1 2 3)) // 1
+(cdr (list 1 2 3)) // [2, 3] \n
++ variables, functions, ...
+`
+}</SyntaxHighlighter>
 
 ---
 export default Code
