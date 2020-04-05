@@ -1,5 +1,5 @@
 import Code from "mdx-code";
-import { Notes } from "mdx-deck";
+import { Notes, Appear } from "mdx-deck";
 import { Split, FullScreenCode } from "mdx-deck/layouts";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 export theme from "./theme";
@@ -107,7 +107,7 @@ export default FullScreenCode;
 
 <img
   src="https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RcbiAgICBsaXN0IC0tPiAzMlxuICAgIGxpc3QgLS0-IDMzXG4gICAgbGlzdCAtLT4gMzRcblx0XHRcdFx0XHQiLCJtZXJtYWlkIjp7InRoZW1lIjoibmV1dHJhbCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ"
-  alt="Abstract Syntax Tree"
+  alt="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RcbiAgICBsaXN0IC0tPiAzMlxuICAgIGxpc3QgLS0-IDMzXG4gICAgbGlzdCAtLT4gMzRcblx0XHRcdFx0XHQiLCJtZXJtYWlkIjp7InRoZW1lIjoibmV1dHJhbCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ"
   style={{ height: "50vh", width: "100%", objectFit: "contain" }}
 />
 
@@ -116,17 +116,35 @@ export default FullScreenCode;
 
 # Interpreting
 
-<SyntaxHighlighter language="text">{
-`[ "+",
-    "10",
-    [ "car",
-      [ "list",
-        "32", "33", "34" ]
-    ]
-]
-  => 42
-`
-}</SyntaxHighlighter>
+
+
+<div style={{ display: "flex", flexDirection: "row" }}>
+
+<img
+  src="https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RcbiAgICBsaXN0IC0tPiAzMlxuICAgIGxpc3QgLS0-IDMzXG4gICAgbGlzdCAtLT4gMzRcblx0XHRcdFx0XHQiLCJtZXJtYWlkIjp7InRoZW1lIjoibmV1dHJhbCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ"
+  alt="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RcbiAgICBsaXN0IC0tPiAzMlxuICAgIGxpc3QgLS0-IDMzXG4gICAgbGlzdCAtLT4gMzRcblx0XHRcdFx0XHQiLCJtZXJtYWlkIjp7InRoZW1lIjoibmV1dHJhbCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ"
+  style={{ objectFit: "contain", flex: 1 }}
+/>
+
+<Appear>
+  <img
+    src="https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RbXCJbIDMyLCAzMywgMzQgXVwiXVxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9"
+    alt="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RbXCJbIDMyLCAzMywgMzQgXVwiXVxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9"
+    style={{ objectFit: "contain", flex: 1, paddingBottom: "90px" }}
+  />
+  <img
+    src="https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiAzMlxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9"
+    alt="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiAzMlxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9"
+    style={{ objectFit: "contain", flex: 1, paddingBottom: "90px" }}
+  />
+  <img
+    src="https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggTFJcbiAgICA0MlxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9"
+    alt="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggTFJcbiAgICA0MlxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9"
+    style={{ objectFit: "contain", flex: 1, paddingBottom: "130px", paddingTop: "40px" }}
+  />
+</Appear>
+
+</div>
 
 ---
 export default Code
