@@ -82,6 +82,49 @@ export default FullScreenCode;
 }</SyntaxHighlighter>
 
 ---
+
+# Phases of Interpretation
+
+---
+export default FullScreenCode;
+
+# Lexing
+
+<SyntaxHighlighter language="text">{
+`(+ 10 (car (list 32 33 34)))
+  => [
+        "(", "+", "10", "(",
+        "car", "(", "list", "1",
+        "2", "3", ")", ")", ")"
+     ]
+`
+}</SyntaxHighlighter>
+
+---
+
+# Parsing
+
+[![](https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggVERcblxuXHQrIC0tPiAxMFxuICAgICsgLS0-IGNhclxuICAgIGNhciAtLT4gbGlzdFxuICAgIGxpc3QgLS0-IDMyXG4gICAgbGlzdCAtLT4gMzNcbiAgICBsaXN0IC0tPiAzNFxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggVERcblxuXHQrIC0tPiAxMFxuICAgICsgLS0-IGNhclxuICAgIGNhciAtLT4gbGlzdFxuICAgIGxpc3QgLS0-IDMyXG4gICAgbGlzdCAtLT4gMzNcbiAgICBsaXN0IC0tPiAzNFxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9)
+
+---
+export default FullScreenCode;
+
+# Executing
+
+<SyntaxHighlighter language="text">{
+`[ "+",
+    "10",
+    [ "car",
+      [ "list",
+        "32", "33", "34" ]
+    ]
+]
+  => 42
+`
+}</SyntaxHighlighter>
+
+---
+
 export default Code
 
 ```javascript A playground slide!
