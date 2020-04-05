@@ -1,8 +1,70 @@
 import Code from "mdx-code";
 import { Notes } from "mdx-deck";
+import { Split, FullScreenCode } from "mdx-deck/layouts";
+import SyntaxHighlighter from 'react-syntax-highlighter';
 export theme from "./theme";
 
 # Building a LISP interpreter
+
+---
+export default FullScreenCode;
+
+## What's an interpreter, anyways?
+
+<SyntaxHighlighter language="c">{
+`int fib(int n) {
+  if (n < 2) {
+    return n;
+  }
+  
+  return fib(n - 1) + fib(n - 2);
+}`
+}</SyntaxHighlighter>
+
+<Notes>
+  Interpreting is a way of running code.
+  There's "Compilation" and "Interpretation" - when "compiling",
+  you take your code and create something machine-readable out of it.
+  That's what's run on your computer.
+  When "interpreting", you take your code and pass it to
+  an "intepreter", which is a program that "interprets" the code
+  and will execute it.
+
+  Basically, all code can either be compiled or interpreted.
+</Notes>
+
+---
+export default Code
+
+```js
+function getCharArray(program) {
+  return program.split("");
+}
+```
+```javascript Building a Brainfuck-esque interpreter
+function interpret(program) {
+  const tokens = getCharArray(program);
+
+  let index = 0;
+  let data = 0;
+
+  while (index < tokens.length) {
+    const token = tokens[index];
+
+    switch (token) {
+      case ".": console.log(data); break;
+      case "+": data++; break;
+      case "-": data--; break;
+      case "[": index += data; continue;
+    }
+
+    index++;
+  }
+}
+
+interpret("-+++-.");
+// interpret("++++.+-+-++[+-+------.");
+```
 
 ---
 export default Code
