@@ -6,6 +6,11 @@ export theme from "./theme";
 
 # Building a LISP interpreter
 
+<Notes>
+Why?
+'cuz it's always interesting to know how our code is executed
+</Notes>
+
 ---
 export default FullScreenCode;
 
@@ -32,6 +37,10 @@ export default FullScreenCode;
 
   Basically, all code can either be compiled or interpreted.
 </Notes>
+
+---
+
+# -+++-.
 
 ---
 export default Code
@@ -303,3 +312,28 @@ function plus(a, b) {
 
 interpret(["+", "10", ["car", ["list", "32", "33", "34"]]]);
 ```
+
+---
+export default Code
+
+```javascript Introducing: numLisp
+const numLisp = require("numlisp/dist/Interpreter");
+
+const input = `
+(+ 5 6)
+(list 5 6 7)
+`;
+
+numLisp.interpret(input).forEach(r => console.log(r));
+```
+
+
+---
+
+## Building programming languages is fun.
+
+[Try it yourself!](https://www.freecodecamp.org/news/the-programming-language-pipeline-91d3f449c919/)
+
+---
+
+Any questions?
