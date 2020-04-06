@@ -42,6 +42,16 @@ export default FullScreenCode;
 
 # -+++-.
 
+<Notes>
+Let's have a look at an imaginary programming language:
+It supports three operations, which all act on a counter:
+- `+`: increment it
+- `-`: decrement it
+- `.`: print it
+
+So this code will print out `1`.
+</Notes>
+
 ---
 export default Code
 
@@ -78,7 +88,7 @@ interpret("-+++-.");
 ---
 export default FullScreenCode;
 
-# LISP explained
+# LISP by example
 
 <SyntaxHighlighter language="lisp">{
 `(+ 7 8) // 15
@@ -89,6 +99,10 @@ export default FullScreenCode;
 + variables, functions, ...
 `
 }</SyntaxHighlighter>
+
+<Notes>
+Let's have a look at a more well-known language: LISP.
+</Notes>
 
 ---
 
@@ -109,6 +123,11 @@ export default FullScreenCode;
 `
 }</SyntaxHighlighter>
 
+<Notes>
+A "Lexer" takes source code and splits it into its "lexemes",
+which are the basic tokens of the text.
+</Notes>
+
 ---
 export default FullScreenCode;
 
@@ -120,12 +139,15 @@ export default FullScreenCode;
   style={{ height: "50vh", width: "100%", objectFit: "contain" }}
 />
 
+<Notes>
+These tokens are then passed into the parser, which makes a so-called *Abstract Syntax Tree* (AST) out of it.
+That's a data structure that represents the structure of your code.
+</Notes>
+
 ---
 export default FullScreenCode;
 
 # Interpreting
-
-
 
 <div style={{ display: "flex", flexDirection: "row" }}>
 
@@ -154,6 +176,11 @@ export default FullScreenCode;
 </Appear>
 
 </div>
+
+<Notes>
+The `interpreter` can then take that AST and execute it.
+It will incrementally resolve and execute it along the way.
+</Notes>
 
 ---
 export default Code
