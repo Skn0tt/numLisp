@@ -1,0 +1,366 @@
+import Code from "mdx-code";
+import { Notes, Appear } from "mdx-deck";
+import { Split, FullScreenCode } from "mdx-deck/layouts";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+export theme from "./theme";
+
+# Building a LISP interpreter
+
+<Notes>
+Why?
+'cuz it's always interesting to know how our code is executed
+</Notes>
+
+---
+export default FullScreenCode;
+
+## What's an interpreter, anyways?
+
+<SyntaxHighlighter language="c">{
+`int fib(int n) {
+  if (n < 2) {
+    return n;
+  }
+  
+  return fib(n - 1) + fib(n - 2);
+}`
+}</SyntaxHighlighter>
+
+<Notes>
+  Interpreting is a way of running code.
+  There's "Compilation" and "Interpretation" - when "compiling",
+  you take your code and create something machine-readable out of it.
+  That's what's run on your computer.
+  When "interpreting", you take your code and pass it to
+  an "intepreter", which is a program that "interprets" the code
+  and will execute it.
+
+  Basically, all code can either be compiled or interpreted.
+</Notes>
+
+---
+
+# -+++-.
+
+<Notes>
+Let's have a look at an imaginary programming language:
+It supports three operations, which all act on a counter:
+- `+`: increment it
+- `-`: decrement it
+- `.`: print it
+
+So this code will print out `1`.
+</Notes>
+
+---
+export default Code
+
+```js
+function getCharArray(program) {
+  return program.split("");
+}
+```
+```javascript Building a Brainfuck-esque interpreter: "-+++-."
+function interpret(program) {
+  const tokens = getCharArray(program);
+
+  let index = 0;
+  let data = 0;
+
+  while (index < tokens.length) {
+    const token = tokens[index];
+
+    switch (token) {
+      case ".": console.log(data); break;
+      case "+": data++; break;
+      case "-": data--; break;
+      case "[": index += data; continue;
+    }
+
+    index++;
+  }
+}
+
+interpret("-+++-.");
+// interpret("++++.+-+-++[+-+------.");
+```
+
+---
+export default FullScreenCode;
+
+# LISP by example
+
+<SyntaxHighlighter language="lisp">{
+`(+ 7 8) // 15
+(list 1 2 3) // [1, 2, 3]
+(cons 42 (list 1 2 3)) // [42, 1, 2, 3]
+(car (list 1 2 3)) // 1
+(cdr (list 1 2 3)) // [2, 3] \n
++ variables, functions, ...
+`
+}</SyntaxHighlighter>
+
+<Notes>
+Let's have a look at a more well-known language: LISP.
+</Notes>
+
+---
+
+# Phases of Interpretation
+
+---
+export default FullScreenCode;
+
+# Lexing
+
+<SyntaxHighlighter language="text">{
+`(+ 10 (car (list 32 33 34)))
+  => [
+        "(", "+", "10", "(",
+        "car", "(", "list", "1",
+        "2", "3", ")", ")", ")"
+     ]
+`
+}</SyntaxHighlighter>
+
+<Notes>
+A "Lexer" takes source code and splits it into its "lexemes",
+which are the basic tokens of the text.
+</Notes>
+
+---
+export default FullScreenCode;
+
+# Parsing
+
+<img
+  src="https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RcbiAgICBsaXN0IC0tPiAzMlxuICAgIGxpc3QgLS0-IDMzXG4gICAgbGlzdCAtLT4gMzRcblx0XHRcdFx0XHQiLCJtZXJtYWlkIjp7InRoZW1lIjoibmV1dHJhbCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ"
+  alt="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RcbiAgICBsaXN0IC0tPiAzMlxuICAgIGxpc3QgLS0-IDMzXG4gICAgbGlzdCAtLT4gMzRcblx0XHRcdFx0XHQiLCJtZXJtYWlkIjp7InRoZW1lIjoibmV1dHJhbCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ"
+  style={{ height: "50vh", width: "100%", objectFit: "contain" }}
+/>
+
+<Notes>
+These tokens are then passed into the parser, which makes a so-called *Abstract Syntax Tree* (AST) out of it.
+That's a data structure that represents the structure of your code.
+</Notes>
+
+---
+export default FullScreenCode;
+
+# Interpreting
+
+<div style={{ display: "flex", flexDirection: "row" }}>
+
+<img
+  src="https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RcbiAgICBsaXN0IC0tPiAzMlxuICAgIGxpc3QgLS0-IDMzXG4gICAgbGlzdCAtLT4gMzRcblx0XHRcdFx0XHQiLCJtZXJtYWlkIjp7InRoZW1lIjoibmV1dHJhbCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ"
+  alt="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RcbiAgICBsaXN0IC0tPiAzMlxuICAgIGxpc3QgLS0-IDMzXG4gICAgbGlzdCAtLT4gMzRcblx0XHRcdFx0XHQiLCJtZXJtYWlkIjp7InRoZW1lIjoibmV1dHJhbCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ"
+  style={{ objectFit: "contain", flex: 1 }}
+/>
+
+<Appear>
+  <img
+    src="https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RbXCJbIDMyLCAzMywgMzQgXVwiXVxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9"
+    alt="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiBjYXJcbiAgICBjYXIgLS0-IGxpc3RbXCJbIDMyLCAzMywgMzQgXVwiXVxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9"
+    style={{ objectFit: "contain", flex: 1, paddingBottom: "90px" }}
+  />
+  <img
+    src="https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiAzMlxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9"
+    alt="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggTFJcblx0KyAtLT4gMTBcbiAgICArIC0tPiAzMlxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9"
+    style={{ objectFit: "contain", flex: 1, paddingBottom: "90px" }}
+  />
+  <img
+    src="https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggTFJcbiAgICA0MlxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9"
+    alt="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggTFJcbiAgICA0MlxuXHRcdFx0XHRcdCIsIm1lcm1haWQiOnsidGhlbWUiOiJuZXV0cmFsIn0sInVwZGF0ZUVkaXRvciI6ZmFsc2V9"
+    style={{ objectFit: "contain", flex: 1, paddingBottom: "130px", paddingTop: "40px" }}
+  />
+</Appear>
+
+</div>
+
+<Notes>
+The `interpreter` can then take that AST and execute it.
+It will incrementally resolve and execute it along the way.
+</Notes>
+
+---
+export default Code
+
+```js
+const _ = require("lodash");
+
+const splitMultiple = (...splitters) => v => {
+  const result = [];
+
+  let lastElement = "";
+
+  _.forEach(v, c => {
+    if (_.includes(splitters, c)) {
+      if (lastElement) {
+        result.push(lastElement);
+      }
+      result.push(c);
+      lastElement = "";
+    } else {
+      lastElement += c;
+    }
+  })
+
+  if (lastElement) {
+    result.push(lastElement);
+  }
+
+  return result;
+}
+```
+```javascript Building a Lexer
+function tokenize(v) {
+  const tokens = splitMultiple("(", ")", " ")(v);
+  return tokens;
+  // return tokens.filter(v => v.trim().length > 0);
+}
+
+tokenize("(+ 10 (car (list 32 33 34)))");
+```
+
+---
+export default Code
+
+```js
+const _ = require("lodash");
+const indexOfClosingBracket = (tokens) => {
+    let openedBrackets = 0;
+    for (let i = 0; i < tokens.length; i++) {
+        const isFirstToken = i === 0;
+        const token = tokens[i];
+        switch (token) {
+            case "(":
+                openedBrackets++;
+                break;
+            case ")":
+                openedBrackets--;
+                if (!isFirstToken && openedBrackets === 0) {
+                    return i;
+                }
+                break;
+        }
+    }
+    return -1;
+};
+const untilClosingBracket = (tokens) => {
+    const closingIndex = indexOfClosingBracket(tokens);
+    return tokens.slice(0, closingIndex + 1);
+};
+const withoutEnclosingBrackets = (tokens) => {
+    if (_.first(tokens) === "(" && _.last(tokens) === ")") {
+        return _.tail(_.initial(tokens));
+    }
+    return tokens;
+};
+const generateAST = (tokens) => {
+    const result = [];
+    for (let i = 0; i < tokens.length; i++) {
+        const token = tokens[i];
+        switch (token) {
+          case "(":
+            const remainder = tokens.slice(i);
+            const lengthOfSubExpression = indexOfClosingBracket(remainder);
+            const endOfSubExpression = i + lengthOfSubExpression;
+            const subExpressionWithEnclosingBrackets = tokens.slice(i, endOfSubExpression + 1);
+            const subExpression = withoutEnclosingBrackets(subExpressionWithEnclosingBrackets);
+            i = endOfSubExpression;
+            result.push(generateAST(subExpression));
+            break;
+        default:
+            result.push(token);
+            break;
+        }
+    }
+    return result;
+};
+```
+```javascript Building a Parser
+function generateASTs(tokens) {
+  const result = [];
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+    if (token === "(") {
+      const remainder = tokens.slice(i);
+      const lengthOfSubExpression = indexOfClosingBracket(remainder);
+      const endOfSubExpression = i + lengthOfSubExpression;
+      const subExpressionWithEnclosingBrackets = tokens.slice(i, endOfSubExpression + 1);
+      const subExpression = withoutEnclosingBrackets(subExpressionWithEnclosingBrackets);
+      i = endOfSubExpression;
+      result.push(generateAST(subExpression));
+    }
+  }
+  return result;
+}
+
+generateASTs(["(", "+", "10", "(", "car", "(", "list", "32", "33", "34", ")", ")", ")"]);
+```
+
+---
+export default Code
+
+```js
+const _ = require("lodash");
+
+const globals = {
+  "+": (a, b) => plus(+a, +b),
+  car,
+  list
+};
+
+function list(...args) {
+  return args;
+}
+function car(args) {
+  return args[0];
+}
+```
+```javascript Building an Interpreter
+function interpret(ast) {
+  const [ funcRef, ...args ] = ast;
+  const argsToPass = args.map(arg => { // resolve embedded ASTs
+    if (_.isArray(arg)) {
+      return interpret(arg);
+    }
+
+    return arg;
+  }); 
+
+  const func = globals[funcRef]; // get Implementation of function
+  return func(...argsToPass); // execute
+}
+
+function plus(a, b) {
+  // TODO:
+}
+
+interpret(["+", "10", ["car", ["list", "32", "33", "34"]]]);
+```
+
+---
+export default Code
+
+```javascript Introducing: numLisp
+const numLisp = require("numlisp/dist/Interpreter");
+
+const input = `
+(+ 5 6)
+(list 5 6 7)
+`;
+
+numLisp.interpret(input).forEach(r => console.log(r));
+```
+
+
+---
+
+## Building programming languages is fun.
+
+[Try it yourself!](https://www.freecodecamp.org/news/the-programming-language-pipeline-91d3f449c919/)
+
+---
+
+Any questions?
